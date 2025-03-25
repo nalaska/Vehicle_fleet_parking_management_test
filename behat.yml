@@ -1,0 +1,9 @@
+default:
+  autoload:
+    '': "%paths.base%/features/bootstrap"
+  suites:
+    default:
+      contexts:
+        - VehicleFleetContext
+      paths:
+        - features
