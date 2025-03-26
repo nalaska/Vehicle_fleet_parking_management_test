@@ -1,30 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fulll\Domain\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 #[ORM\Entity]
-#[ORM\Table(name: "fleet")]
+#[ORM\Table(name: 'fleet')]
 class Fleet
 {
     #[ORM\Id]
-    #[ORM\Column(name: "fleet_id", type: "uuid", unique: true)]
-    #[ORM\GeneratedValue(strategy: "NONE")]
-    private ?UuidInterface $fleetId;
+    #[ORM\Column(name: 'fleet_id', type: 'uuid', unique: true)]
+    #[ORM\GeneratedValue(strategy: 'NONE')]
+    private UuidInterface $fleetId;
 
-    #[ORM\Column(name: "user_id", type: "string", length: 255)]
+    #[ORM\Column(name: 'user_id', type: 'string', length: 255)]
     private string $userId;
 
-    /**
-     * @var Collection<int, Vehicle>
-     */
-    #[ORM\OneToMany(targetEntity: Vehicle::class, mappedBy: "fleet", cascade: ["persist", "remove"], orphanRemoval: true)]
+    /** @var Collection<int, Vehicle> */
+    #[ORM\OneToMany(targetEntity: Vehicle::class, mappedBy: 'fleet', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $vehicles;
 
     public function __construct(?UuidInterface $fleetId, string $userId)
@@ -36,7 +36,7 @@ class Fleet
 
     public function getFleetId(): string
     {
-        return $this->fleetId ? $this->fleetId->toString() : '';
+        return $this->fleetId->toString();
     }
 
     public function getUserId(): string
@@ -44,19 +44,18 @@ class Fleet
         return $this->userId;
     }
 
+    /** @return Collection<int, Vehicle> */
     public function getVehicles(): Collection
     {
         return $this->vehicles;
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function registerVehicle(Vehicle $vehicle): void
     {
         foreach ($this->vehicles as $v) {
             if ($v->getPlateNumber() === $vehicle->getPlateNumber()) {
-                throw new Exception("Vehicle already registered in this fleet");
+                throw new Exception('Vehicle already registered in this fleet');
             }
         }
         $vehicle->setFleet($this);
@@ -70,6 +69,7 @@ class Fleet
                 return true;
             }
         }
+
         return false;
     }
 
@@ -80,6 +80,7 @@ class Fleet
                 return $v;
             }
         }
+
         return null;
     }
 }

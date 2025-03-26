@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fulll\App\Command\Console;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Fulll\App\Command\ParkVehicleCommand as DomainParkVehicleCommand;
 use Fulll\App\Handler\ParkVehicleHandler;
 use Fulll\Infra\Repository\DoctrineFleetRepository;
@@ -28,22 +32,28 @@ class LocalizeVehicleConsoleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var EntityManagerInterface $entityManager */
         $entityManager = require __DIR__ . '/../../../../bootstrap/doctrine.php';
+
         $repository = new DoctrineFleetRepository($entityManager);
         $handler = new ParkVehicleHandler($repository);
 
-        $fleetId = $input->getArgument('fleetId');
-        $vehiclePlateNumber = $input->getArgument('vehiclePlateNumber');
+        $fleetId = (string) $input->getArgument('fleetId');
+        $vehiclePlateNumber = (string) $input->getArgument('vehiclePlateNumber');
+
         $lat = (float) $input->getArgument('lat');
         $lng = (float) $input->getArgument('lng');
-        $alt = $input->getArgument('alt') !== null ? (float) $input->getArgument('alt') : null;
+        $altRaw = $input->getArgument('alt');
+        $alt = $altRaw !== null ? (float) $altRaw : null;
 
         try {
             $handler->handle(new DomainParkVehicleCommand($fleetId, $vehiclePlateNumber, $lat, $lng, $alt));
-            $output->writeln("Véhicule localisé avec succès.");
+            $output->writeln('Véhicule localisé avec succès.');
+
             return Command::SUCCESS;
-        } catch (\Exception $e) {
-            $output->writeln("Erreur : " . $e->getMessage());
+        } catch (Exception $e) {
+            $output->writeln('Erreur : ' . $e->getMessage());
+
             return Command::FAILURE;
         }
     }

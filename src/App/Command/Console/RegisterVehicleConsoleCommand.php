@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fulll\App\Command\Console;
 
+use Exception;
 use Fulll\App\Command\RegisterVehicleCommand as DomainRegisterVehicleCommand;
 use Fulll\App\Handler\RegisterVehicleHandler;
 use Fulll\Infra\Repository\DoctrineFleetRepository;
@@ -34,10 +37,12 @@ class RegisterVehicleConsoleCommand extends Command
 
         try {
             $handler->handle(new DomainRegisterVehicleCommand($fleetId, $vehiclePlateNumber));
-            $output->writeln("Véhicule enregistré avec succès.");
+            $output->writeln('Véhicule enregistré avec succès.');
+
             return Command::SUCCESS;
-        } catch (\Exception $e) {
-            $output->writeln("Erreur : " . $e->getMessage());
+        } catch (Exception $e) {
+            $output->writeln('Erreur : ' . $e->getMessage());
+
             return Command::FAILURE;
         }
     }

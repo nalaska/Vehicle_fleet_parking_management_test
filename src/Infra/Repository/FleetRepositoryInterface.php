@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Fulll\Infra\Repository;
 
 use Fulll\Domain\Model\Fleet;
@@ -6,6 +9,8 @@ use Fulll\Domain\Model\Fleet;
 interface FleetRepositoryInterface
 {
     public function find(string $fleetId): ?Fleet;
+
     public function add(Fleet $fleet): void;
+
     public function update(Fleet $fleet): void;
 }

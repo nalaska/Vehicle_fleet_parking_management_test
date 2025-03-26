@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fulll\Infra\Repository;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Fulll\Domain\Model\Fleet;
-use Doctrine\ORM\EntityManagerInterface;
 
 class DoctrineFleetRepository implements FleetRepositoryInterface
 {

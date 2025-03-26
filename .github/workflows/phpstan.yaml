@@ -1,0 +1,27 @@
+name: PHPStan Analysis
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    env:
+      API_KEY: ${{ secrets.API_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-scripts --no-progress --no-suggest --prefer-dist
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --level=7

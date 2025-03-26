@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fulll\App\Command\Console;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Fulll\App\Command\CreateFleetCommand as DomainCreateFleetCommand;
 use Fulll\App\Handler\CreateFleetHandler;
 use Fulll\Infra\Repository\DoctrineFleetRepository;
@@ -24,11 +27,12 @@ class CreateFleetConsoleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var EntityManagerInterface $entityManager */
         $entityManager = require __DIR__ . '/../../../../bootstrap/doctrine.php';
         $repository = new DoctrineFleetRepository($entityManager);
         $handler = new CreateFleetHandler($repository);
 
-        $userId = $input->getArgument('userId');
+        $userId = (string) $input->getArgument('userId');
         $command = new DomainCreateFleetCommand($userId);
 
         $fleet = $handler->handle($command);
