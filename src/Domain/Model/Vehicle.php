@@ -1,34 +1,62 @@
 <?php
+
 namespace Fulll\Domain\Model;
 
+use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
-final class Vehicle
+#[ORM\Entity]
+#[ORM\Table(name: "vehicle")]
+class Vehicle
 {
-    /** @var Location[] */
-    private array $locations = [];
+    #[ORM\Id]
+    #[ORM\Column(type: "integer")]
+    #[ORM\GeneratedValue]
+    private ?int $id = null;
 
-    public function __construct(
-        public readonly string $plateNumber
-    ) {}
+    #[ORM\Column(name: "plate_number",type: "string", length: 255)]
+    private string $plateNumber;
+
+    #[ORM\ManyToOne(targetEntity: Fleet::class, inversedBy: "vehicles")]
+    #[ORM\JoinColumn(name: "fleet_id", referencedColumnName: "fleet_id", nullable: false)]
+    private Fleet $fleet;
+
+    #[ORM\Embedded(class: Location::class, columnPrefix: "location_")]
+    private ?Location $currentLocation = null;
+
+    public function __construct(string $plateNumber)
+    {
+        $this->plateNumber = $plateNumber;
+    }
+
+    public function getPlateNumber(): string
+    {
+        return $this->plateNumber;
+    }
+
+    public function setFleet(Fleet $fleet): void
+    {
+        $this->fleet = $fleet;
+    }
+
+    public function getFleet(): Fleet
+    {
+        return $this->fleet;
+    }
+
+    public function getCurrentLocation(): ?Location
+    {
+        return $this->currentLocation;
+    }
 
     /**
      * @throws Exception
      */
     public function registerLocation(Location $location): void
     {
-        // Vérifie si le véhicule est déjà à cette localisation
-        if (!empty($this->locations)) {
-            $lastLocation = end($this->locations);
-            if ($lastLocation->equals($location)) {
-                throw new Exception("Vehicle already parked at this location");
-            }
+        if ($this->currentLocation !== null && $this->currentLocation->equals($location)) {
+            throw new Exception("Vehicle already parked at this location");
         }
-        $this->locations[] = $location;
-    }
-
-    public function getCurrentLocation(): ?Location
-    {
-        return $this->locations ? end($this->locations) : null;
+        $this->currentLocation = $location;
     }
 }

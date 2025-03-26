@@ -31,7 +31,7 @@ class VehicleFleetContext implements Context
     {
         $handler = new CreateFleetHandler($this->repository);
         $fleet = $handler->handle(new CreateFleetCommand('current_user'));
-        $this->currentFleetId = $fleet->fleetId;
+        $this->currentFleetId = $fleet->getFleetId();
     }
 
     #[Given("the fleet of another user")]
@@ -39,7 +39,7 @@ class VehicleFleetContext implements Context
     {
         $handler = new CreateFleetHandler($this->repository);
         $fleet = $handler->handle(new CreateFleetCommand('another_user'));
-        $this->currentFleetId = $fleet->fleetId;
+        $this->currentFleetId = $fleet->getFleetId();
     }
 
     #[Given("a vehicle with plate number :plateNumber")]
@@ -65,25 +65,31 @@ class VehicleFleetContext implements Context
         $handler = new RegisterVehicleHandler($this->repository);
         try {
             $handler->handle(new RegisterVehicleCommand($this->currentFleetId, $this->currentVehiclePlate));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
         }
     }
 
+    /**
+     * @throws Exception
+     */
     #[Then("this vehicle should be part of my vehicle fleet")]
     public function thisVehicleShouldBePartOfMyVehicleFleet(): void
     {
         $fleet = $this->repository->find($this->currentFleetId);
         if (!$fleet || !$fleet->hasVehicle($this->currentVehiclePlate)) {
-            throw new \Exception("Vehicle is not registered in the fleet");
+            throw new Exception("Vehicle is not registered in the fleet");
         }
     }
 
+    /**
+     * @throws Exception
+     */
     #[Then("I should be informed that this vehicle has already been registered into my fleet")]
     public function iShouldBeInformedThatThisVehicleHasAlreadyBeenRegisteredIntoMyFleet(): void
     {
         if ($this->errorMessage !== "Vehicle already registered in this fleet") {
-            throw new \Exception("Expected error message not received");
+            throw new Exception("Expected error message not received");
         }
     }
 
@@ -109,42 +115,46 @@ class VehicleFleetContext implements Context
         }
     }
 
+    /**
+     * @throws Exception
+     */
     #[Then("the known location of my vehicle should be :expectedLocation")]
     public function theKnownLocationOfMyVehicleShouldBe(string $expectedLocation): void
     {
         $fleet = $this->repository->find($this->currentFleetId);
 
         if ($fleet === null) {
-            throw new \Exception("Vehicle is not registered in the fleet");
+            throw new Exception("Vehicle is not registered in the fleet");
         }
 
         $vehicle = $fleet->getVehicle($this->currentVehiclePlate);
 
         if ($vehicle === null) {
-            throw new \Exception("Vehicle is not registered in the fleet");
+            throw new Exception("Vehicle is not registered in the fleet");
         }
 
         $location = $vehicle->getCurrentLocation();
 
         if ($location === null) {
-            throw new \Exception("Vehicle is not registered in the fleet");
+            throw new Exception("Vehicle is not registered in the fleet");
         }
 
         $actualLocation = $location->lat . ',' . $location->lng;
         if ($actualLocation !== $expectedLocation) {
-            throw new \Exception("Expected location $expectedLocation, got $actualLocation");
+            throw new Exception("Expected location $expectedLocation, got $actualLocation");
         }
     }
 
+    /**
+     * @throws Exception
+     */
     #[Then("I should be informed that my vehicle is already parked at this location")]
     public function iShouldBeInformedThatMyVehicleIsAlreadyParkedAtThisLocation(): void
     {
         if ($this->errorMessage !== "Vehicle already parked at this location") {
-            throw new \Exception("Expected parking error message not received");
+            throw new Exception("Expected parking error message not received");
         }
     }
-
-    // Étapes manquantes
 
     #[Given("my vehicle has been parked into this location")]
     public function myVehicleHasBeenParkedIntoThisLocation(): void

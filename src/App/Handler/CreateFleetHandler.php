@@ -12,8 +12,7 @@ final readonly class CreateFleetHandler
 
     public function handle(CreateFleetCommand $command): Fleet
     {
-        $fleetId = uniqid('fleet_', true);
-        $fleet = new Fleet($fleetId, $command->userId);
+        $fleet = new Fleet(null, $command->userId);
         $this->fleetRepository->add($fleet);
         return $fleet;
     }

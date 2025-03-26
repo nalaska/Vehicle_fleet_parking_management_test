@@ -15,11 +15,11 @@ final class InMemoryFleetRepository implements FleetRepositoryInterface
 
     public function add(Fleet $fleet): void
     {
-        $this->fleets[$fleet->fleetId] = $fleet;
+        $this->fleets[$fleet->getFleetId()] = $fleet;
     }
 
     public function update(Fleet $fleet): void
     {
-        $this->fleets[$fleet->fleetId] = $fleet;
+        $this->fleets[$fleet->getFleetId()] = $fleet;
     }
 }

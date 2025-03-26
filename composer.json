@@ -2,9 +2,12 @@
   "type": "project",
   "license": "proprietary",
   "require": {
-    "behat/behat": "*"
-  },
-  "require-dev": {
+    "behat/behat": "*",
+    "symfony/console": "^7.2",
+    "doctrine/orm": "^3.1",
+    "symfony/cache": "^7.2",
+    "ramsey/uuid": "^4.7",
+    "ramsey/uuid-doctrine": "^2.1"
   },
   "config": {
     "preferred-install": {
@@ -17,7 +20,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Fulll\\": "src/"
+      "Fulll\\": "src/",
+      "Db\\": "bootstrap"
     }
   }
 }
