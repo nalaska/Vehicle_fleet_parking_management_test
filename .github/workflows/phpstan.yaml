@@ -1,5 +1,4 @@
 name: PHPStan Analysis
-
 on:
   pull_request:
     branches: [master]
