@@ -4,7 +4,7 @@
 
 - **PHP 8.3**  
 - **Composer**  
-- (Optionnel) Une base de données MariaDB/MySQL configurée (si vous utilisez Doctrine)
+- (Optionnel) Une base de données MariaDB/MySQL configurée
 
 ## Installation
 
@@ -113,7 +113,3 @@ vendor/bin/behat
 ## Intégration Continue (CI)
 
 Un exemple de workflow GitHub Actions est fourni dans `.github/workflows/ci.yml`, qui exécute **PHPStan** et **Behat** sur chaque *pull request* vers `master`. Vous pouvez l’adapter à vos besoins.
-
----
-
-**Voilà !** Vous pouvez maintenant créer, enregistrer et localiser des véhicules dans une flotte, tout en validant votre code (PHPStan) et votre logique métier (Behat). Si vous avez des questions, n’hésitez pas à ouvrir une *issue* ou à contribuer. 
