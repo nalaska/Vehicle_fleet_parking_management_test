@@ -4,26 +4,16 @@ declare(strict_types=1);
 
 namespace Fulll\Domain\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
-#[ORM\Entity]
-#[ORM\Table(name: 'vehicle')]
 class Vehicle
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue]
     private ?int $id = null;
 
-    #[ORM\Column(name: 'plate_number', type: 'string', length: 255)]
     private string $plateNumber;
 
-    #[ORM\ManyToOne(targetEntity: Fleet::class, inversedBy: 'vehicles')]
-    #[ORM\JoinColumn(name: 'fleet_id', referencedColumnName: 'fleet_id', nullable: false)]
     private Fleet $fleet;
 
-    #[ORM\Embedded(class: Location::class, columnPrefix: 'location_')]
     private ?Location $currentLocation = null;
 
     public function __construct(string $plateNumber)

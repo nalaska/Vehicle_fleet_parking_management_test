@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping
+        xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Fulll\Domain\Model\Vehicle" table="vehicle">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="plateNumber" type="string" column="plate_number" length="255"/>
+
+        <many-to-one field="fleet" target-entity="Fulll\Domain\Model\Fleet" inversed-by="vehicles">
+            <join-column name="fleet_id" referenced-column-name="fleet_id" nullable="false"/>
+        </many-to-one>
+
+        <embedded name="currentLocation" class="Fulll\Domain\Model\Location" column-prefix="location_"/>
+    </entity>
+</doctrine-mapping>
