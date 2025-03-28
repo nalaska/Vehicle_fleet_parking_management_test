@@ -30,13 +30,13 @@
 ### 1. Créer une flotte
 
 ```bash
-php bin/console fleet:create <userId>
+php bin/console.php fleet:create <userId>
 ```
 - **userId** : Identifiant de l’utilisateur pour lequel on crée la flotte.
 
 **Exemple :**
 ```bash
-php bin/console fleet:create user123
+php bin/console.php fleet:create user123
 ```
 Sortie possible :
 ```
@@ -48,14 +48,14 @@ Flotte créée avec l'ID : a1b2c3d4-e5f6-7a89-b0c1-d2e3f4a5b6c7
 ### 2. Enregistrer un véhicule
 
 ```bash
-php bin/console fleet:register-vehicle <fleetId> <vehiclePlateNumber>
+php bin/console.php fleet:register-vehicle <fleetId> <vehiclePlateNumber>
 ```
 - **fleetId** : Identifiant de la flotte (fourni lors de la création).
 - **vehiclePlateNumber** : Plaque d’immatriculation du véhicule.
 
 **Exemple :**
 ```bash
-php bin/console fleet:register-vehicle a1b2c3d4-e5f6-7a89-b0c1-d2e3f4a5b6c7 ABC123
+php bin/console.php fleet:register-vehicle a1b2c3d4-e5f6-7a89-b0c1-d2e3f4a5b6c7 ABC123
 ```
 Sortie possible :
 ```
@@ -67,7 +67,7 @@ Véhicule enregistré avec succès.
 ### 3. Localiser un véhicule
 
 ```bash
-php bin/console fleet:localize-vehicle <fleetId> <vehiclePlateNumber> <lat> <lng> [alt]
+php bin/console.php fleet:localize-vehicle <fleetId> <vehiclePlateNumber> <lat> <lng> [alt]
 ```
 - **fleetId** : Identifiant de la flotte.
 - **vehiclePlateNumber** : Plaque d’immatriculation du véhicule.
@@ -77,7 +77,7 @@ php bin/console fleet:localize-vehicle <fleetId> <vehiclePlateNumber> <lat> <lng
 
 **Exemple (sans altitude) :**
 ```bash
-php bin/console fleet:localize-vehicle a1b2c3d4-e5f6-7a89-b0c1-d2e3f4a5b6c7 ABC123 48.8566 2.3522
+php bin/console.php fleet:localize-vehicle a1b2c3d4-e5f6-7a89-b0c1-d2e3f4a5b6c7 ABC123 48.8566 2.3522
 ```
 Sortie possible :
 ```
