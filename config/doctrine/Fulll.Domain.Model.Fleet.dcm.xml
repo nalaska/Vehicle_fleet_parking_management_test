@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping
+        xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Fulll\Domain\Model\Fleet" table="fleet">
+        <id name="fleetId" type="uuid" column="fleet_id">
+            <generator strategy="NONE"/>
+        </id>
+        <field name="userId" type="string" column="user_id" length="255"/>
+
+        <one-to-many field="vehicles"
+                     target-entity="Fulll\Domain\Model\Vehicle"
+                     mapped-by="fleet"
+                     orphan-removal="true">
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+    </entity>
+
+</doctrine-mapping>

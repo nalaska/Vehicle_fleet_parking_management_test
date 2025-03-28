@@ -6,25 +6,17 @@ namespace Fulll\Domain\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-#[ORM\Entity]
-#[ORM\Table(name: 'fleet')]
 class Fleet
 {
-    #[ORM\Id]
-    #[ORM\Column(name: 'fleet_id', type: 'uuid', unique: true)]
-    #[ORM\GeneratedValue(strategy: 'NONE')]
     private UuidInterface $fleetId;
 
-    #[ORM\Column(name: 'user_id', type: 'string', length: 255)]
     private string $userId;
 
     /** @var Collection<int, Vehicle> */
-    #[ORM\OneToMany(targetEntity: Vehicle::class, mappedBy: 'fleet', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $vehicles;
 
     public function __construct(?UuidInterface $fleetId, string $userId)

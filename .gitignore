@@ -1,3 +1,4 @@
 vendor
 .idea
 .db_data
+.php-cs-fixer.cache
