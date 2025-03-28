@@ -9,14 +9,11 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Fulll\Domain\Model\Fleet;
 
-class DoctrineFleetRepository implements FleetRepositoryInterface
+readonly class DoctrineFleetRepository implements FleetRepositoryInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+    ) {}
 
     /**
      * @throws OptimisticLockException

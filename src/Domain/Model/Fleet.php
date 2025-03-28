@@ -10,7 +10,7 @@ use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class Fleet
+final class Fleet
 {
     private UuidInterface $fleetId;
 

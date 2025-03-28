@@ -6,7 +6,7 @@ namespace Fulll\Domain\Model;
 
 use Exception;
 
-class Vehicle
+final class Vehicle
 {
     private ?int $id = null;
 

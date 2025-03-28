@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateFleetConsoleCommand extends Command
+final class CreateFleetConsoleCommand extends Command
 {
     protected static string $defaultName = 'fleet:create';
 

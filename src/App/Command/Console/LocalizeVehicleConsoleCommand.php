@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class LocalizeVehicleConsoleCommand extends Command
+final class LocalizeVehicleConsoleCommand extends Command
 {
     protected static string $defaultName = 'fleet:localize-vehicle';
 
