@@ -9,6 +9,6 @@ $entityManager = require __DIR__ . '/bootstrap/doctrine.php';
 $schemaTool = new SchemaTool($entityManager);
 
 $classes = $entityManager->getMetadataFactory()->getAllMetadata();
-$schemaTool->createSchema($classes);
+$schemaTool->updateSchema($classes);
 
 echo 'Schema updated successfully.';

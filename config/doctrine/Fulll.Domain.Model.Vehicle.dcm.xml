@@ -9,7 +9,7 @@
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
-        <field name="plateNumber" type="string" column="plate_number" length="255"/>
+        <field name="plateNumber" type="string" column="plate_number" length="255" unique="true"/>
 
         <many-to-one field="fleet" target-entity="Fulll\Domain\Model\Fleet" inversed-by="vehicles">
             <join-column name="fleet_id" referenced-column-name="fleet_id" nullable="false"/>
